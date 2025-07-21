@@ -1,28 +1,12 @@
 'use client';
 import { useState, useEffect } from "react";
 import Header from './components/Header';
-import StrategiesSection from './components/StrategiesSection';
 import LogDisplay from './components/LogDisplay';
 import { Strategy } from './utils/types';
-import { useInitializeBroker } from './hooks/useInitializeBroker';
 import { useNotification } from './components/NotificationProvider';
 import DirectionalOptionSellingStrategy from './components/DirectionalOptionSellingStrategy';
+import { useInitializeBroker } from './hooks/useInitializeBroker';
 
-const mockStrategies: Strategy[] = [
-  {
-    name: "Momentum Strategy",
-    positions: [
-      { symbol: "AAPL", qty: 10, side: "Long" },
-      { symbol: "TSLA", qty: 5, side: "Short" },
-    ],
-  },
-  {
-    name: "Mean Reversion",
-    positions: [
-      { symbol: "GOOG", qty: 2, side: "Long" },
-    ],
-  },
-];
 
 const mockLogs = [
   "[09:00] Connected to broker.",
@@ -31,23 +15,20 @@ const mockLogs = [
 ];
 
 export default function TradingDashboard() {
-  const { isLoading, error, message } = useInitializeBroker();
+  const { isLoading, error, message, initialize, isSuccess } = useInitializeBroker();
   const [logs, setLogs] = useState(mockLogs);
   const { notify } = useNotification();
+
+  useEffect(() => {
+    initialize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (message) {
       notify(message, 'success');
     }
   }, [message, notify]);
-
-  const handleBroker1Login = () => {
-    setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] Attempting to login to Broker 1...`]);
-  };
-
-  const handleBroker2Login = () => {
-    setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] Attempting to login to Broker 2...`]);
-  };
 
   if (isLoading) {
     return (
@@ -64,11 +45,10 @@ export default function TradingDashboard() {
     <main className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-5xl mx-auto space-y-8">
         <Header 
-          onBroker1Login={handleBroker1Login}
-          onBroker2Login={handleBroker2Login}
+          onBroker1Login={() => setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] Attempting to login to Broker 1...`])}
+          onBroker2Login={() => setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] Attempting to login to Broker 2...`])}
         />
         <DirectionalOptionSellingStrategy />
-        <StrategiesSection strategies={mockStrategies} />
         <LogDisplay logs={logs} />
       </div>
     </main>

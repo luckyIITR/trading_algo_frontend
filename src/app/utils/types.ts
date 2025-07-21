@@ -71,4 +71,79 @@ export interface StrategyActionResponse {
 
 export interface StrategyErrorResponse {
   detail: string;
+}
+
+export interface TradeLeg {
+  leg_id: string;
+  symbol: string;
+  exchange: string;
+  side: string;
+  quantity: number;
+  entry_price: number;
+  product_type: string;
+  order_type: string;
+  exit_price: number | null;
+  status: string;
+  order_id_entry: string | null;
+  order_id_exit: string | null;
+  entry_time: string | null;
+  exit_time: string | null;
+  stop_loss: number | null;
+  target: number | null;
+}
+
+export interface Trade {
+  trade_id: string;
+  strategy_name: string;
+  direction: string;
+  legs: TradeLeg[];
+  entry_time: string;
+  exit_time: string | null;
+  status: string;
+  notes: string | null;
+  tags: string[];
+}
+
+export interface CurrentTradesResponse {
+  current_trades: Trade[];
+}
+
+export interface ForceNewPositionResponse {
+  force_new_position: boolean;
+}
+
+export interface SetForceNewPositionRequest {
+  force_new_position: boolean;
+}
+
+export interface SetForceNewPositionResponse {
+  message: string;
+}
+
+export interface StrategyConfig {
+  symbols: string[];
+  strategy_name: string;
+  working_lot: number;
+}
+
+export interface GetConfigResponse {
+  config: StrategyConfig;
+}
+
+export interface SetConfigResponse {
+  message: string;
+}
+
+export type PositionType = 'BULL' | 'BEAR' | 'NONE' | null;
+
+export interface GetCurrentPositionResponse {
+  current_position: PositionType;
+}
+
+export interface UpdateCurrentPositionRequest {
+  new_position: 'BULL' | 'BEAR' | 'NONE';
+}
+
+export interface UpdateCurrentPositionResponse {
+  message: string;
 } 
