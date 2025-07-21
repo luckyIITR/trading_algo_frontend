@@ -23,19 +23,19 @@ export default function ConfirmDialog({
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-      <div className="bg-white rounded shadow-lg p-6 w-full max-w-xs">
-        <div className="font-bold text-lg mb-2 text-gray-800">{title}</div>
+      <div className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8 w-full max-w-xs">
+        <div className="font-bold text-lg mb-2 text-blue-700">{title}</div>
         <div className="text-gray-600 mb-4 text-sm">{description}</div>
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-2 mt-2">
           <button
             onClick={onCancel}
-            className="px-3 py-1 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+            className="px-4 py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition font-semibold"
           >
             {cancelText}
           </button>
           <button
             onClick={onConfirm}
-            className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700 transition font-semibold"
+            className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition font-semibold"
           >
             {confirmText}
           </button>

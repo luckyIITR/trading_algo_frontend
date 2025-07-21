@@ -19,7 +19,6 @@ export function useStrategyLogs() {
   return useQuery<string[], Error>({
     queryKey: ['directional-option-selling-logs'],
     queryFn: fetchLogs,
-    refetchInterval: 5000, // auto-refresh every 5 seconds
     refetchOnWindowFocus: true,
   });
 } 

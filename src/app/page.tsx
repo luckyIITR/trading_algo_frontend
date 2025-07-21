@@ -1,22 +1,12 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Header from './components/Header';
-import LogDisplay from './components/LogDisplay';
-import { Strategy } from './utils/types';
 import { useNotification } from './components/NotificationProvider';
 import DirectionalOptionSellingStrategy from './components/DirectionalOptionSellingStrategy';
 import { useInitializeBroker } from './hooks/useInitializeBroker';
 
-
-const mockLogs = [
-  "[09:00] Connected to broker.",
-  "[09:01] Placed order for AAPL.",
-  "[09:02] Order filled for TSLA.",
-];
-
 export default function TradingDashboard() {
-  const { isLoading, error, message, initialize, isSuccess } = useInitializeBroker();
-  const [logs, setLogs] = useState(mockLogs);
+  const { isLoading, error, message, initialize } = useInitializeBroker();
   const { notify } = useNotification();
 
   useEffect(() => {
@@ -32,7 +22,7 @@ export default function TradingDashboard() {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-gray-50">
+      <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-blue-50">
         <div className="flex flex-col items-center gap-2">
           <div className="w-8 h-8 border-4 border-blue-400 border-t-transparent rounded-full animate-spin" />
           <span className="text-gray-600 mt-2">Initializing broker sessions...</span>
@@ -42,15 +32,19 @@ export default function TradingDashboard() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-5xl mx-auto space-y-8">
-        <Header 
-          onBroker1Login={() => setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] Attempting to login to Broker 1...`])}
-          onBroker2Login={() => setLogs(prev => [...prev, `[${new Date().toLocaleTimeString()}] Attempting to login to Broker 2...`])}
-        />
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-blue-50">
+      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b border-gray-200 shadow-sm">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+          <span className="text-2xl font-bold tracking-tight text-blue-700">Trading Algo Dashboard</span>
+          <Header 
+            onBroker1Login={() => {}}
+            onBroker2Login={() => {}}
+          />
+        </div>
+      </header>
+      <main className="max-w-5xl mx-auto px-4 py-8 flex flex-col gap-8">
         <DirectionalOptionSellingStrategy />
-        <LogDisplay logs={logs} />
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

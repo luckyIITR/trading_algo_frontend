@@ -56,10 +56,10 @@ export default function StrategyConfigDialog({ open, onClose }: StrategyConfigDi
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
-      <form onSubmit={handleConfigSave} className="bg-white rounded shadow-lg p-6 w-full max-w-md flex flex-col gap-3">
-        <div className="font-semibold text-gray-700 mb-1 text-lg">Edit Strategy Config</div>
-        <div className="flex flex-col gap-2">
-          <label className="text-sm text-gray-600">
+      <form onSubmit={handleConfigSave} className="bg-white rounded-xl shadow-2xl border border-gray-200 p-8 w-full max-w-md flex flex-col gap-4">
+        <div className="font-bold text-lg text-blue-700 mb-2">Edit Strategy Config</div>
+        <div className="flex flex-col gap-3">
+          <label className="text-sm text-gray-600 font-semibold">
             Symbols (comma separated):
             <input
               type="text"
@@ -67,10 +67,10 @@ export default function StrategyConfigDialog({ open, onClose }: StrategyConfigDi
               value={editConfig?.symbols ?? ''}
               onChange={handleConfigChange}
               disabled={configLoading || setConfigLoading}
-              className="mt-1 w-full rounded border px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400"
+              className="mt-1 w-full rounded border px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 bg-gray-50"
             />
           </label>
-          <label className="text-sm text-gray-600">
+          <label className="text-sm text-gray-600 font-semibold">
             Strategy Name:
             <input
               type="text"
@@ -78,10 +78,10 @@ export default function StrategyConfigDialog({ open, onClose }: StrategyConfigDi
               value={editConfig?.strategy_name ?? ''}
               onChange={handleConfigChange}
               disabled={configLoading || setConfigLoading}
-              className="mt-1 w-full rounded border px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400"
+              className="mt-1 w-full rounded border px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 bg-gray-50"
             />
           </label>
-          <label className="text-sm text-gray-600">
+          <label className="text-sm text-gray-600 font-semibold">
             Working Lot:
             <input
               type="number"
@@ -89,7 +89,7 @@ export default function StrategyConfigDialog({ open, onClose }: StrategyConfigDi
               value={editConfig?.working_lot ?? ''}
               onChange={handleConfigChange}
               disabled={configLoading || setConfigLoading}
-              className="mt-1 w-full rounded border px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400"
+              className="mt-1 w-full rounded border px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 bg-gray-50"
             />
           </label>
         </div>
@@ -98,7 +98,7 @@ export default function StrategyConfigDialog({ open, onClose }: StrategyConfigDi
             type="button"
             onClick={onClose}
             disabled={setConfigLoading}
-            className="px-4 py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+            className="px-4 py-2 rounded bg-gray-100 text-gray-700 hover:bg-gray-200 transition font-semibold"
           >
             Cancel
           </button>

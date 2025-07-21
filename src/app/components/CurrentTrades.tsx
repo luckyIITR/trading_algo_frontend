@@ -6,6 +6,25 @@ import { useExitTrade } from '../hooks/useExitTrade';
 import { useNotification } from './NotificationProvider';
 import ConfirmDialog from './ConfirmDialog';
 
+function getTradeStatusBadge(status: string) {
+  if (status === 'active') return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-200">Active</span>;
+  if (status === 'created') return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700 border border-yellow-200">Created</span>;
+  return <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-500 border border-gray-200">{status}</span>;
+}
+
+function getLegSideColor(side: string) {
+  if (side === 'BUY') return 'text-green-600 font-bold';
+  if (side === 'SELL') return 'text-red-600 font-bold';
+  return '';
+}
+
+function getLegStatusBadge(status: string) {
+  if (status === 'open') return <span className="inline-block px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 border border-green-200">Open</span>;
+  if (status === 'pending') return <span className="inline-block px-2 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700 border border-yellow-200">Pending</span>;
+  if (status === 'closed') return <span className="inline-block px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-700 border border-gray-300">Closed</span>;
+  return <span className="inline-block px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-500 border border-gray-200">{status}</span>;
+}
+
 export default function CurrentTrades() {
   const { data: trades, isLoading, error, refetch, isFetching } = useCurrentTrades();
   const { mutateAsync: deleteTrade, isPending: isDeleting } = useDeleteTrade();
@@ -75,7 +94,7 @@ export default function CurrentTrades() {
   const isButtonLoading = isLoading || isFetching;
 
   return (
-    <div className="bg-white rounded shadow p-6 mt-4">
+    <section className="bg-white rounded-xl shadow p-6 border border-gray-100">
       <ConfirmDialog
         open={confirmOpen}
         title="Delete Trade?"
@@ -93,10 +112,10 @@ export default function CurrentTrades() {
         onCancel={handleCancelExit}
       />
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-gray-800">Current Trades</h2>
+        <h2 className="text-xl font-bold text-blue-700 tracking-tight">Current Trades</h2>
         <button
           onClick={() => refetch()}
-          className="px-3 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition flex items-center gap-2"
+          className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition flex items-center gap-2 shadow-sm"
           disabled={isButtonLoading}
         >
           {isButtonLoading && (
@@ -110,20 +129,20 @@ export default function CurrentTrades() {
       </div>
       <div className="space-y-6">
         {trades.map(trade => (
-          <div key={trade.trade_id} className="border rounded p-4 text-gray-700">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-              <div>
-                <span className="font-semibold">Strategy:</span> {trade.strategy_name} <span className="ml-2 font-semibold">Direction:</span> {trade.direction}
+          <div key={trade.trade_id} className="border rounded-lg p-4 text-gray-700 bg-gray-50 hover:shadow-md transition">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2 gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-semibold">Strategy:</span> {trade.strategy_name}
+                <span className="font-semibold ml-2">Direction:</span> {trade.direction}
+                <span className="ml-2">{getTradeStatusBadge(trade.status)}</span>
                 <span className="ml-4 text-xs text-gray-400 select-all">Trade ID: <span className="font-mono">{trade.trade_id}</span></span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className={`inline-block w-2 h-2 rounded-full mr-1 ${trade.status === 'active' ? 'bg-green-500' : trade.status === 'created' ? 'bg-yellow-500' : 'bg-gray-400'}`}></span>
-                <span className="text-xs text-gray-600">{trade.status}</span>
+              <div className="flex items-center gap-2 mt-2 md:mt-0">
                 <button
                   title="Exit trade"
                   onClick={() => handleExitClick(trade.trade_id)}
                   disabled={isExiting}
-                  className="ml-2 p-1 rounded hover:bg-yellow-100 transition"
+                  className="p-1 rounded hover:bg-yellow-100 transition border border-yellow-200 shadow-sm"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
@@ -133,7 +152,7 @@ export default function CurrentTrades() {
                   title="Delete trade"
                   onClick={() => handleDeleteClick(trade.trade_id)}
                   disabled={isDeleting}
-                  className="ml-2 p-1 rounded hover:bg-red-100 transition"
+                  className="p-1 rounded hover:bg-red-100 transition border border-red-200 shadow-sm"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -141,29 +160,29 @@ export default function CurrentTrades() {
                 </button>
               </div>
             </div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full text-xs border">
-                <thead>
-                  <tr className="bg-gray-100">
-                    <th className="px-2 py-1">Leg</th>
-                    <th className="px-2 py-1">Symbol</th>
-                    <th className="px-2 py-1">Side</th>
-                    <th className="px-2 py-1">Qty</th>
-                    <th className="px-2 py-1">Entry Price</th>
-                    <th className="px-2 py-1">Exit Price</th>
-                    <th className="px-2 py-1">Status</th>
+            <div className="overflow-x-auto rounded-lg border border-gray-200">
+              <table className="min-w-full text-xs">
+                <thead className="sticky top-0 z-10 bg-gray-100">
+                  <tr>
+                    <th className="px-2 py-2 font-semibold text-gray-700 text-left">Leg</th>
+                    <th className="px-2 py-2 font-semibold text-gray-700 text-left">Symbol</th>
+                    <th className="px-2 py-2 font-semibold text-gray-700 text-left">Side</th>
+                    <th className="px-2 py-2 font-semibold text-gray-700 text-left">Qty</th>
+                    <th className="px-2 py-2 font-semibold text-gray-700 text-left">Entry Price</th>
+                    <th className="px-2 py-2 font-semibold text-gray-700 text-left">Exit Price</th>
+                    <th className="px-2 py-2 font-semibold text-gray-700 text-left">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {trade.legs.map(leg => (
-                    <tr key={leg.leg_id}>
-                      <td className="px-2 py-1">{leg.leg_id.slice(0, 6)}...</td>
+                    <tr key={leg.leg_id} className="even:bg-white odd:bg-gray-50 hover:bg-blue-50 transition">
+                      <td className="px-2 py-1 truncate max-w-[80px]" title={leg.leg_id}>{leg.leg_id.slice(0, 6)}...</td>
                       <td className="px-2 py-1">{leg.symbol}</td>
-                      <td className="px-2 py-1">{leg.side}</td>
+                      <td className={`px-2 py-1 ${getLegSideColor(leg.side)}`}>{leg.side}</td>
                       <td className="px-2 py-1">{leg.quantity}</td>
                       <td className="px-2 py-1">{leg.entry_price}</td>
                       <td className="px-2 py-1">{leg.exit_price ?? '-'}</td>
-                      <td className="px-2 py-1">{leg.status}</td>
+                      <td className="px-2 py-1">{getLegStatusBadge(leg.status)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -175,6 +194,6 @@ export default function CurrentTrades() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 } 
