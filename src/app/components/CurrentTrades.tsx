@@ -94,7 +94,7 @@ export default function CurrentTrades() {
   const isButtonLoading = isLoading || isFetching;
 
   return (
-    <section className="bg-white rounded-xl shadow p-6 border border-gray-100">
+    <section className="bg-white rounded-xl shadow p-3 sm:p-6 border border-gray-100 w-full">
       <ConfirmDialog
         open={confirmOpen}
         title="Delete Trade?"
@@ -111,7 +111,7 @@ export default function CurrentTrades() {
         onConfirm={handleConfirmExit}
         onCancel={handleCancelExit}
       />
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4 mb-4">
         <h2 className="text-xl font-bold text-blue-700 tracking-tight">Current Trades</h2>
         <button
           onClick={() => refetch()}
@@ -129,15 +129,15 @@ export default function CurrentTrades() {
       </div>
       <div className="space-y-6">
         {trades.map(trade => (
-          <div key={trade.trade_id} className="border rounded-lg p-4 text-gray-700 bg-gray-50 hover:shadow-md transition">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2 gap-2">
+          <div key={trade.trade_id} className="border rounded-lg p-3 sm:p-4 text-gray-700 bg-gray-50 hover:shadow-md transition">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-2">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-semibold">Strategy:</span> {trade.strategy_name}
                 <span className="font-semibold ml-2">Direction:</span> {trade.direction}
                 <span className="ml-2">{getTradeStatusBadge(trade.status)}</span>
                 <span className="ml-4 text-xs text-gray-400 select-all">Trade ID: <span className="font-mono">{trade.trade_id}</span></span>
               </div>
-              <div className="flex items-center gap-2 mt-2 md:mt-0">
+              <div className="flex items-center gap-2 mt-2 sm:mt-0">
                 <button
                   title="Exit trade"
                   onClick={() => handleExitClick(trade.trade_id)}
@@ -160,7 +160,8 @@ export default function CurrentTrades() {
                 </button>
               </div>
             </div>
-            <div className="overflow-x-auto rounded-lg border border-gray-200">
+            {/* Responsive table: always visible, scrollable on mobile */}
+            <div className="overflow-x-auto w-full rounded-lg border border-gray-200">
               <table className="min-w-full text-xs">
                 <thead className="sticky top-0 z-10 bg-gray-100">
                   <tr>

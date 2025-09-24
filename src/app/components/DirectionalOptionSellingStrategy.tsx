@@ -73,14 +73,14 @@ export default function DirectionalOptionSellingStrategy() {
   };
 
   return (
-    <section className="bg-white rounded-xl shadow p-6 flex flex-col gap-6 border border-gray-100">
+    <section className="bg-white rounded-xl shadow p-4 sm:p-6 flex flex-col gap-4 sm:gap-6 border border-gray-100 w-full">
       <StrategyConfigDialog open={configDialogOpen} onClose={() => setConfigDialogOpen(false)} />
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-2">
-        <div className="flex items-center gap-3">
-          <span className="text-xl font-bold text-blue-700 tracking-tight">Directional Option Selling</span>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-2">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="text-lg sm:text-xl font-bold text-blue-700 tracking-tight">Directional Option Selling</span>
           <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold border ${status === 'running' ? 'bg-green-100 text-green-700 border-green-200' : status === 'stopped' ? 'bg-gray-100 text-gray-500 border-gray-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200'}`}>{status === 'running' ? 'Running' : status === 'stopped' ? 'Stopped' : 'Unknown'}</span>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center mt-2 sm:mt-0">
           <button
             type="button"
             onClick={() => setConfigDialogOpen(true)}
@@ -90,8 +90,8 @@ export default function DirectionalOptionSellingStrategy() {
           </button>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div className="flex gap-3 items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+        <div className="flex gap-2 sm:gap-3 items-center flex-wrap">
           <button
             onClick={handleStart}
             disabled={loading || status === 'running'}
@@ -107,7 +107,7 @@ export default function DirectionalOptionSellingStrategy() {
             ■ Stop
           </button>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 mt-2 sm:mt-0">
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -133,7 +133,7 @@ export default function DirectionalOptionSellingStrategy() {
               value={currentPosition ?? 'NONE'}
               onChange={handlePositionChange}
               disabled={positionLoading || updatePositionLoading}
-              className="rounded border px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 bg-white shadow-sm hover:border-blue-400 transition text-gray-700"
+              className="rounded border px-2 py-1 text-sm focus:ring-2 focus:ring-blue-400 bg-white shadow-sm hover:border-blue-400 transition"
             >
               {POSITION_OPTIONS.map(opt => (
                 <option key={opt.value} value={opt.value}>{opt.label}</option>

@@ -42,8 +42,10 @@ export default function TradingDashboard() {
           />
         </div>
       </header>
-      <main className="max-w-5xl mx-auto px-4 py-8 flex flex-col gap-8">
-        <DirectionalOptionSellingStrategy />
+      <main className="max-w-5xl mx-auto px-2 sm:px-4 py-4 sm:py-8 flex flex-col gap-6 sm:gap-8 w-full">
+        <div className="w-full">
+          <DirectionalOptionSellingStrategy />
+        </div>
       </main>
     </div>
   );

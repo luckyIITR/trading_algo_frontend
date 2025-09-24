@@ -1,4 +1,4 @@
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://iamlucky.co.in';
 
 export const API_ENDPOINTS = {
   ZERODHA_LOGIN: '/auth/login-zerodha',
