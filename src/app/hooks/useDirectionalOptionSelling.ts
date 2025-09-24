@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { API_BASE_URL, API_ENDPOINTS } from '../utils/config';
 import { StrategyStatusResponse, StrategyActionResponse, StrategyErrorResponse } from '../utils/types';

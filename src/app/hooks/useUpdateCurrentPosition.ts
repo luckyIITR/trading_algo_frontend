@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API_BASE_URL, API_ENDPOINTS } from '../utils/config';
-import { UpdateCurrentPositionRequest, UpdateCurrentPositionResponse } from '../utils/types';
+import { UpdateCurrentPositionResponse } from '../utils/types';
 
 async function updateCurrentPosition(new_position: 'BULL' | 'BEAR' | 'NONE') {
   const res = await fetch(`${API_BASE_URL}${API_ENDPOINTS.DIRECTIONAL_OPTION_SELLING.UPDATE_CURRENT_POSITION}`, {

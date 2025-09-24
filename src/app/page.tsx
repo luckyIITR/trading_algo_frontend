@@ -6,7 +6,7 @@ import DirectionalOptionSellingStrategy from './components/DirectionalOptionSell
 import { useInitializeBroker } from './hooks/useInitializeBroker';
 
 export default function TradingDashboard() {
-  const { isLoading, error, message, initialize } = useInitializeBroker();
+  const { isLoading, message, initialize } = useInitializeBroker();
   const { notify } = useNotification();
 
   useEffect(() => {

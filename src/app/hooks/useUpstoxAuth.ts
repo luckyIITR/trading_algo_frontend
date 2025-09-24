@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { API_BASE_URL, API_ENDPOINTS } from '../utils/config';
-import { ZerodhaLoginResponse, ApiError } from '../utils/types';
+import { ZerodhaLoginResponse, ApiError, ApiErrorResponse } from '../utils/types';
 
 export function useUpstoxAuth() {
   const mutation = useMutation({
@@ -12,7 +12,7 @@ export function useUpstoxAuth() {
         },
       });
       if (!response.ok) {
-        const errorData: ApiError = await response.json();
+        const errorData: ApiErrorResponse = await response.json();
         throw new ApiError(errorData.error || 'Failed to get login URL', response.status);
       }
       const data: ZerodhaLoginResponse = await response.json();

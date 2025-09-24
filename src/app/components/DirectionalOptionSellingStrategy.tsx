@@ -38,8 +38,9 @@ export default function DirectionalOptionSellingStrategy() {
     try {
       const res = await start();
       notify(res.message, 'success');
-    } catch (err: any) {
-      notify(err.message || 'Failed to start strategy', 'error');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to start strategy';
+      notify(errorMessage, 'error');
     }
   };
 
@@ -47,8 +48,9 @@ export default function DirectionalOptionSellingStrategy() {
     try {
       const res = await stop();
       notify(res.message, 'success');
-    } catch (err: any) {
-      notify(err.message || 'Failed to stop strategy', 'error');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to stop strategy';
+      notify(errorMessage, 'error');
     }
   };
 
@@ -57,8 +59,9 @@ export default function DirectionalOptionSellingStrategy() {
     try {
       const res = await setForceNewPosition(!forceNewPosition);
       notify(res.message, 'success');
-    } catch (err: any) {
-      notify(err.message || 'Failed to set force new position', 'error');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to set force new position';
+      notify(errorMessage, 'error');
     }
   };
 
@@ -67,8 +70,9 @@ export default function DirectionalOptionSellingStrategy() {
     try {
       const res = await updatePosition(newPosition);
       notify(res.message, 'success');
-    } catch (err: any) {
-      notify(err.message || 'Failed to update position', 'error');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to update position';
+      notify(errorMessage, 'error');
     }
   };
 

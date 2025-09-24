@@ -47,8 +47,9 @@ export default function StrategyConfigDialog({ open, onClose }: StrategyConfigDi
       const res = await setConfig(payload);
       notify(res.message, 'success');
       onClose();
-    } catch (err: any) {
-      notify(err.message || 'Failed to save config', 'error');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to save config';
+      notify(errorMessage, 'error');
     }
   };
 

@@ -2,6 +2,7 @@ import { useZerodhaAuth } from '../hooks/useZerodhaAuth';
 import { useUpstoxAuth } from '../hooks/useUpstoxAuth';
 import { useZerodhaProfile } from '../hooks/useZerodhaProfile';
 import { useUpstoxProfile } from '../hooks/useUpstoxProfile';
+import Image from 'next/image';
 
 interface HeaderProps {
   onBroker1Login: () => void;
@@ -18,7 +19,7 @@ function StatusBadge({ isAuthenticated, avatar, name, broker }: { isAuthenticate
         title={isAuthenticated ? 'Authenticated' : 'Not Authenticated'}
       />
       {isAuthenticated && avatar && (
-        <img src={avatar} alt={name} className="w-5 h-5 rounded-full border" />
+        <Image src={avatar} alt={name || 'User'} width={20} height={20} className="w-5 h-5 rounded-full border" />
       )}
       <span className="text-xs text-gray-700 font-medium">
         {isAuthenticated ? name : broker}

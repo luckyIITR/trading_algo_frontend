@@ -14,7 +14,7 @@ export interface ZerodhaLoginResponse {
   login_url: string;
 }
 
-export interface ApiError {
+export interface ApiErrorResponse {
   error: string;
 }
 
@@ -38,7 +38,7 @@ export interface ZerodhaProfile {
   products: string[];
   order_types: string[];
   avatar_url: string;
-  meta: Record<string, any>;
+  meta: Record<string, unknown>;
 }
 
 // Upstox Profile

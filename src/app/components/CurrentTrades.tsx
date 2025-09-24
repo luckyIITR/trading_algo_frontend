@@ -45,8 +45,9 @@ export default function CurrentTrades() {
     try {
       const res = await deleteTrade(pendingDeleteId);
       notify(res.message, 'success');
-    } catch (err: any) {
-      notify(err.message || 'Failed to delete trade', 'error');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to delete trade';
+      notify(errorMessage, 'error');
     } finally {
       setConfirmOpen(false);
       setPendingDeleteId(null);
@@ -68,8 +69,9 @@ export default function CurrentTrades() {
     try {
       const res = await exitTrade(pendingExitId);
       notify(res.message, 'success');
-    } catch (err: any) {
-      notify(err.message || 'Failed to exit trade', 'error');
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to exit trade';
+      notify(errorMessage, 'error');
     } finally {
       setExitConfirmOpen(false);
       setPendingExitId(null);

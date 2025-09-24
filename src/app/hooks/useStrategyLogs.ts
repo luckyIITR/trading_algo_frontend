@@ -3,7 +3,7 @@ import { API_BASE_URL, API_ENDPOINTS } from '../utils/config';
 
 async function fetchLogs() {
   const res = await fetch(`${API_BASE_URL}${API_ENDPOINTS.DIRECTIONAL_OPTION_SELLING.LOGS}`);
-  let text = await res.text();
+  const text = await res.text();
   try {
     const data = JSON.parse(text);
     if (Array.isArray(data)) return data;
